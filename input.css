@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply inline-block bg-primary py-3 px-6 mt-5 text-base md:text-lg rounded-lg hover:bg-orange-500 capitalize font-medium transition-all duration-300 hover:transform hover:scale-105 shadow-lg hover:shadow-xl;
+  }
+  .btn-secondary {
+    @apply inline-block bg-transparent border-2 border-primary py-3 px-6 mt-5 text-base md:text-lg rounded-lg hover:bg-primary hover:text-white capitalize font-medium transition-all duration-300 hover:transform hover:scale-105 shadow-lg hover:shadow-xl;
+  }
+}
+
+@layer utilities {
+  .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+  .backdrop-blur-sm { backdrop-filter: blur(8px); }
+
+  /* Reveal on scroll */
+  .reveal-up { opacity: 0; transform: translateY(24px); transition: opacity 700ms ease, transform 700ms ease; }
+  .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* Ken Burns */
+  .animate-kenburns-slow { animation: kenburns-slow 22s ease-in-out infinite alternate; transform-origin: center; }
+  @keyframes kenburns-slow { 0% { transform: scale(1) translate3d(0,0,0); } 100% { transform: scale(1.12) translate3d(-1%, -2%, 0); } }
+
+  /* Marquee */
+  .marquee { position: relative; overflow: hidden; }
+  .marquee__track { display: flex; align-items: center; gap: 1.25rem; padding: 0.75rem; animation: marquee-scroll 40s linear infinite; }
+  .marquee:hover .marquee__track { animation-play-state: paused; }
+  .marquee__item { height: 10rem; width: auto; object-fit: cover; border-radius: 0.75rem; filter: saturate(1.05) contrast(1.05); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+  @media (min-width: 768px) { .marquee__item { height: 12rem; } }
+  @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Masonry helpers */
+  .break-inside-avoid { break-inside: avoid; }
+  .columns-gap-4 { column-gap: 1rem; }
+  .columns-gap-6 { column-gap: 1.5rem; }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-kenburns-slow, .marquee__track { animation: none !important; }
+    .reveal-up { opacity: 1; transform: none; }
+  }
+}
+
+/* Hero Slideshow Styles */
+.hero-dot {
+  transition: all 0.3s ease;
+}
+
+.hero-dot.active {
+  background-color: white !important;
+  transform: scale(1.2);
+}
+
+.hero-dot:hover {
+  background-color: white !important;
+  transform: scale(1.1);
+}
+
+.hero-nav {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-nav:hover {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  transform: scale(1.1);
+}
+
+.hero-slide {
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-slide img {
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-slide:hover img {
+  transform: scale(1.02);
+}
