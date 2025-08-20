@@ -15,20 +15,54 @@
   .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
   .backdrop-blur-sm { backdrop-filter: blur(8px); }
 
-  /* Reveal on scroll */
-  .reveal-up { opacity: 0; transform: translateY(24px); transition: opacity 700ms ease, transform 700ms ease; }
-  .reveal-up.is-visible { opacity: 1; transform: translateY(0); }
+  /* Enhanced Reveal on scroll with more dynamic animations */
+  .reveal-up { 
+    opacity: 0; 
+    transform: translateY(40px) scale(0.95); 
+    transition: opacity 800ms cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 800ms cubic-bezier(0.4, 0, 0.2, 1); 
+  }
+  .reveal-up.is-visible { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
 
-  /* Ken Burns */
-  .animate-kenburns-slow { animation: kenburns-slow 22s ease-in-out infinite alternate; transform-origin: center; }
-  @keyframes kenburns-slow { 0% { transform: scale(1) translate3d(0,0,0); } 100% { transform: scale(1.12) translate3d(-1%, -2%, 0); } }
+  /* Enhanced Ken Burns with more dramatic movement */
+  .animate-kenburns-slow { 
+    animation: kenburns-slow 25s ease-in-out infinite alternate; 
+    transform-origin: center; 
+  }
+  @keyframes kenburns-slow { 
+    0% { transform: scale(1) translate3d(0,0,0) rotate(0deg); } 
+    100% { transform: scale(1.15) translate3d(-2%, -3%, 0) rotate(1deg); } 
+  }
 
-  /* Marquee */
+  /* Enhanced Marquee with smoother animation */
   .marquee { position: relative; overflow: hidden; }
-  .marquee__track { display: flex; align-items: center; gap: 1.25rem; padding: 0.75rem; animation: marquee-scroll 40s linear infinite; }
+  .marquee__track { 
+    display: flex; 
+    align-items: center; 
+    gap: 1rem; 
+    padding: 0.75rem; 
+    animation: marquee-scroll 35s linear infinite; 
+  }
   .marquee:hover .marquee__track { animation-play-state: paused; }
-  .marquee__item { height: 10rem; width: auto; object-fit: cover; border-radius: 0.75rem; filter: saturate(1.05) contrast(1.05); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
-  @media (min-width: 768px) { .marquee__item { height: 12rem; } }
+  .marquee__item { 
+    height: 8rem; 
+    width: auto; 
+    object-fit: cover; 
+    border-radius: 0.75rem; 
+    filter: saturate(1.1) contrast(1.1); 
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+  }
+  .marquee__item:hover {
+    transform: scale(1.05) translateY(-5px);
+    filter: saturate(1.2) contrast(1.2);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+  }
+  @media (min-width: 768px) { .marquee__item { height: 10rem; } }
+  @media (min-width: 1024px) { .marquee__item { height: 12rem; } }
   @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* Masonry helpers */
@@ -36,46 +70,125 @@
   .columns-gap-4 { column-gap: 1rem; }
   .columns-gap-6 { column-gap: 1.5rem; }
 
+  /* Mobile-first responsive improvements */
+  @media (max-width: 640px) {
+    .marquee__track { gap: 0.75rem; }
+    .marquee__item { height: 6rem; }
+  }
+
+  /* Enhanced floating animations */
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Pulse glow effect */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+  @keyframes pulse-glow {
+    0% { box-shadow: 0 0 20px rgba(237, 127, 57, 0.4); }
+    100% { box-shadow: 0 0 30px rgba(237, 127, 57, 0.8); }
+  }
+
+  /* Slide in from left */
+  .slide-in-left {
+    animation: slide-in-left 0.8s ease-out;
+  }
+  @keyframes slide-in-left {
+    0% { transform: translateX(-100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+
+  /* Slide in from right */
+  .slide-in-right {
+    animation: slide-in-right 0.8s ease-out;
+  }
+  @keyframes slide-in-right {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+
   /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .animate-kenburns-slow, .marquee__track { animation: none !important; }
+    .animate-kenburns-slow, .marquee__track, .float-animation, .pulse-glow { 
+      animation: none !important; 
+    }
     .reveal-up { opacity: 1; transform: none; }
   }
 }
 
-/* Hero Slideshow Styles */
+/* Enhanced Hero Slideshow Styles */
 .hero-dot {
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-dot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s ease;
 }
 
 .hero-dot.active {
   background-color: white !important;
-  transform: scale(1.2);
+  transform: scale(1.3);
+  box-shadow: 0 0 20px rgba(255,255,255,0.6);
 }
 
 .hero-dot:hover {
   background-color: white !important;
-  transform: scale(1.1);
+  transform: scale(1.2);
+}
+
+.hero-dot:hover::before {
+  left: 100%;
 }
 
 .hero-nav {
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-nav:hover {
-  background-color: rgba(0, 0, 0, 0.6) !important;
-  transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 }
 
 .hero-slide {
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: brightness(0.9);
 }
 
 .hero-slide img {
-  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.05);
 }
 
 .hero-slide:hover img {
-  transform: scale(1.02);
+  transform: scale(1.08);
+  filter: brightness(1.1) contrast(1.1);
+}
+
+/* Enhanced floating elements */
+.floating-element {
+  animation: float-gentle 8s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(1deg); }
+  50% { transform: translateY(-12px) rotate(0deg); }
+  75% { transform: translateY(-6px) rotate(-1deg); }
 }
